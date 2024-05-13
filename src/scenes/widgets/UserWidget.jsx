@@ -3,6 +3,10 @@ import {
   EditOutlined,
   LocationOnOutlined,
   WorkOutlineOutlined,
+  BiotechOutlined,
+  Book,
+  PersonOffOutlined,
+  Person,
 } from "@mui/icons-material";
 import { Box, Typography, Divider, useTheme } from "@mui/material";
 import UserImage from "components/UserImage";
@@ -22,7 +26,7 @@ const UserWidget = ({ userId, picturePath }) => {
   const main = palette.neutral.main;
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3001/users/${userId}`, {
+    const response = await fetch(`http://localhost:8000/users/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -46,6 +50,7 @@ const UserWidget = ({ userId, picturePath }) => {
     viewedProfile,
     impressions,
     friends,
+    username
   } = user;
 
   return (
@@ -72,7 +77,7 @@ const UserWidget = ({ userId, picturePath }) => {
             >
               {firstName} {lastName}
             </Typography>
-            <Typography color={medium}>{friends.length} friends</Typography>
+            <Typography color={medium}>{"ka_djouima@esi.dz"}</Typography>
           </Box>
         </FlexBetween>
         <ManageAccountsOutlined />
@@ -83,13 +88,10 @@ const UserWidget = ({ userId, picturePath }) => {
       {/* SECOND ROW */}
       <Box p="1rem 0">
         <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
-          <LocationOnOutlined fontSize="large" sx={{ color: main }} />
-          <Typography color={medium}>{location}</Typography>
+          <Person fontSize="large" sx={{ color: main }} />
+          <Typography color={medium}>bio {location}</Typography>
         </Box>
-        <Box display="flex" alignItems="center" gap="1rem">
-          <WorkOutlineOutlined fontSize="large" sx={{ color: main }} />
-          <Typography color={medium}>{occupation}</Typography>
-        </Box>
+       
       </Box>
 
       <Divider />
@@ -97,15 +99,21 @@ const UserWidget = ({ userId, picturePath }) => {
       {/* THIRD ROW */}
       <Box p="1rem 0">
         <FlexBetween mb="0.5rem">
-          <Typography color={medium}>Who's viewed your profile</Typography>
+          <Typography color={medium}>Following</Typography>
           <Typography color={main} fontWeight="500">
             {viewedProfile}
           </Typography>
         </FlexBetween>
-        <FlexBetween>
-          <Typography color={medium}>Impressions of your post</Typography>
+        <FlexBetween mb="0.5rem">
+          <Typography color={medium}>Followers</Typography>
           <Typography color={main} fontWeight="500">
             {impressions}
+          </Typography>
+        </FlexBetween>
+        <FlexBetween mb="0.5rem">
+          <Typography color={medium}>Number of posts</Typography>
+          <Typography color={main} fontWeight="500">
+            {viewedProfile}
           </Typography>
         </FlexBetween>
       </Box>

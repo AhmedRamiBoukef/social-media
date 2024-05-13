@@ -1,4 +1,4 @@
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, Button, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -6,6 +6,7 @@ import Navbar from "scenes/navbar";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
+import SavedPostsWidget from "scenes/widgets/SavedPostsWidget";
 import UserWidget from "scenes/widgets/UserWidget";
 
 const ProfilePage = () => {
@@ -13,7 +14,10 @@ const ProfilePage = () => {
   const { userId } = useParams();
   const token = useSelector((state) => state.token);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-
+  const [postsType,setPostsType]=useState(true);
+const handleBtnChange= ()=>{
+  setPostsType(!postsType)
+}
   const getUser = async () => {
     const response = await fetch(`http://localhost:3001/users/${userId}`, {
       method: "GET",
@@ -47,10 +51,33 @@ const ProfilePage = () => {
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
-        >
+        > 
+          
           <MyPostWidget picturePath={user.picturePath} />
+          <Box
+  flexBasis={isNonMobileScreens ? "42%" : undefined}
+  mt={isNonMobileScreens ? undefined : "2rem"}
+  display="flex"
+  justifyContent="center"
+  alignItems="center" // Align items vertically
+  gap="1rem"
+>
+  <Button color={postsType ? "primary" : "inherit"} onClick={handleBtnChange}>My posts</Button>
+  <Box
+    height="100%"
+    width="5%"
+   // borderLeft="1px solid black" 
+    margin="0 0.5rem" 
+  />
+  <Button color={!postsType ? "primary" : "inherit"} onClick={handleBtnChange}>Saved posts</Button>
+</Box>
+
           <Box m="2rem 0" />
-          <PostsWidget userId={userId} isProfile />
+          {
+            postsType ? (<PostsWidget userId={userId} isProfile />)
+            : (<SavedPostsWidget/>)
+          }
+          
         </Box>
       </Box>
     </Box>
