@@ -17,32 +17,27 @@ import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 
 const registerSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
+  fullname: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
-  location: yup.string().required("required"),
-  occupation: yup.string().required("required"),
-  picture: yup.string().required("required"),
+  username: yup.string().required("required"),
 });
 
 const loginSchema = yup.object().shape({
-  email: yup.string().email("invalid email").required("required"),
+  username: yup.string().required("required"),
   password: yup.string().required("required"),
 });
 
 const initialValuesRegister = {
-  firstName: "",
-  lastName: "",
+  fullname: "",
   email: "",
   password: "",
-  location: "",
-  occupation: "",
-  picture: "",
+  username: "",
+ 
 };
 
 const initialValuesLogin = {
-  email: "",
+  username: "",
   password: "",
 };
 
@@ -57,20 +52,19 @@ const Form = () => {
 
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
-    const formData = new FormData();
-    for (let value in values) {
-      formData.append(value, values[value]);
-    }
-    formData.append("picturePath", values.picture.name);
-
+    
+    
+    console.log(values);
     const savedUserResponse = await fetch(
-      "http://localhost:3001/auth/register",
+      "http://localhost:8000/signup",
       {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
       }
     );
     const savedUser = await savedUserResponse.json();
+    console.log(savedUser);
     onSubmitProps.resetForm();
 
     if (savedUser) {
@@ -79,17 +73,17 @@ const Form = () => {
   };
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+    const loggedInResponse = await fetch("http://localhost:8000/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     });
     const loggedIn = await loggedInResponse.json();
+    console.log(loggedIn);
     onSubmitProps.resetForm();
     if (loggedIn) {
       dispatch(
         setLogin({
-          user: loggedIn.user,
           token: loggedIn.token,
         })
       );
@@ -130,86 +124,19 @@ const Form = () => {
             {isRegister && (
               <>
                 <TextField
-                  label="First Name"
+                  label="Full Name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.firstName}
-                  name="firstName"
+                  value={values.fullname}
+                  name="fullname"
                   error={
-                    Boolean(touched.firstName) && Boolean(errors.firstName)
+                    Boolean(touched.fullname) && Boolean(errors.fullname)
                   }
-                  helperText={touched.firstName && errors.firstName}
-                  sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                  label="Last Name"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
-                  name="lastName"
-                  error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                  helperText={touched.lastName && errors.lastName}
-                  sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                  label="Location"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.location}
-                  name="location"
-                  error={Boolean(touched.location) && Boolean(errors.location)}
-                  helperText={touched.location && errors.location}
+                  helperText={touched.fullname && errors.fullname}
                   sx={{ gridColumn: "span 4" }}
                 />
+                
                 <TextField
-                  label="Occupation"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.occupation}
-                  name="occupation"
-                  error={
-                    Boolean(touched.occupation) && Boolean(errors.occupation)
-                  }
-                  helperText={touched.occupation && errors.occupation}
-                  sx={{ gridColumn: "span 4" }}
-                />
-                <Box
-                  gridColumn="span 4"
-                  border={`1px solid ${palette.neutral.medium}`}
-                  borderRadius="5px"
-                  p="1rem"
-                >
-                  <Dropzone
-                    acceptedFiles=".jpg,.jpeg,.png"
-                    multiple={false}
-                    onDrop={(acceptedFiles) =>
-                      setFieldValue("picture", acceptedFiles[0])
-                    }
-                  >
-                    {({ getRootProps, getInputProps }) => (
-                      <Box
-                        {...getRootProps()}
-                        border={`2px dashed ${palette.primary.main}`}
-                        p="1rem"
-                        sx={{ "&:hover": { cursor: "pointer" } }}
-                      >
-                        <input {...getInputProps()} />
-                        {!values.picture ? (
-                          <p>Add Picture Here</p>
-                        ) : (
-                          <FlexBetween>
-                            <Typography>{values.picture.name}</Typography>
-                            <EditOutlinedIcon />
-                          </FlexBetween>
-                        )}
-                      </Box>
-                    )}
-                  </Dropzone>
-                </Box>
-              </>
-            )}
-
-            <TextField
               label="Email"
               onBlur={handleBlur}
               onChange={handleChange}
@@ -219,6 +146,21 @@ const Form = () => {
               helperText={touched.email && errors.email}
               sx={{ gridColumn: "span 4" }}
             />
+               
+               
+              </>
+            )}
+            <TextField
+                  label="username"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.username}
+                  name="username"
+                  error={Boolean(touched.username) && Boolean(errors.username)}
+                  helperText={touched.username && errors.username}
+                  sx={{ gridColumn: "span 4" }}
+                />
+            
             <TextField
               label="Password"
               type="password"
