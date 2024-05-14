@@ -109,8 +109,8 @@ const PostWidget = ({
     <WidgetWrapper m="2rem 0">
       <Friend
         friendId={postUserId}
-        fullname={name}
-        username={username}
+        name={name}
+        subtitle={username}
         userPicturePath={`https://avatar.iran.liara.run/public/boy?username=Ash${Math.random()}`}
       />
       <Typography color={main} sx={{ mt: "1rem" }}>

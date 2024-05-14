@@ -3,66 +3,45 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
 
-const SavedPostsWidget = ({ userId, isProfile = false }) => {
+const SavedPostsWidget = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
 
-  const getPosts = async () => {
-    const response = await fetch("http://localhost:3001/posts", {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await response.json();
-    dispatch(setPosts({ posts: data }));
-  };
-
-  const getUserPosts = async () => {
+  const getSavedPosts = async () => {
     const response = await fetch(
-      `http://localhost:3001/posts/${userId}/posts`,
+      `http://localhost:8000/getsavedposts?start_row=1&end_row=10`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       }
     );
     const data = await response.json();
+
     dispatch(setPosts({ posts: data }));
   };
 
   useEffect(() => {
-    if (isProfile) {
-      getUserPosts();
-    } else {
-      getPosts();
-    }
+    getSavedPosts();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
-      {posts.map(
-        ({
-          _id,
-          userId,
-          firstName,
-          lastName,
-          description,
-          location,
-          picturePath,
-          userPicturePath,
-          likes,
-          comments,
-        }) => (
+      {posts && posts.map(
+        (post) => (
           <PostWidget
-            key={_id}
-            postId={_id}
-            postUserId={userId}
-            name={`${firstName} ${lastName}`}
-            description={description}
-            location={location}
-            picturePath={picturePath}
-            userPicturePath={userPicturePath}
-            likes={likes}
-            comments={comments}
+            key={post.post_id}
+            postId={post.post_id}
+            postUserId={post.user.user_id}
+            name={post.user.full_name}
+            description={post.content}
+            username={post.user.username}
+            picturePath={"p13.jpeg"}
+            userPicturePath={"p13.jpeg"}
+            likes={post.nb_likes}
+            isLiked={post.is_liked}
+            isSaved={post.is_saved}
+            nb_comments={post.nb_comments}
           />
         )
       )}
