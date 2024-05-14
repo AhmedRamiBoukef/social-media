@@ -35,7 +35,7 @@ console.log(useSelector((state) => state));
           <Box flexBasis="26%">
             <AdvertWidget />
             <Box m="2rem 0" />
-            <FriendListWidget userId={userid} />
+            <FriendListWidget type={"home"} userId={userid} />
           </Box>
         )}
       </Box>
