@@ -16,15 +16,17 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const UserWidget = ({ userId, picturePath,type }) => {
+const UserWidget = ({ picturePath,type }) => {
   const [user, setUser] = useState(null);
   const { palette } = useTheme();
   const navigate = useNavigate();
   const token = useSelector((state) => state.token);
+  const userId = useSelector((state) => state.id);
+
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
-
+console.log(userId);
   const getUser = async () => {
     const response = await fetch(`http://localhost:8000/myProfile`, {
       method: "GET",
@@ -71,9 +73,9 @@ const UserWidget = ({ userId, picturePath,type }) => {
         gap="0.5rem"
         pb="1.1rem"
         onClick={() => {
-          if (type==="home" && userId) {
+          if (type==="home") {
             navigate(`/profile/${userId}`)
-          }else navigate(`/myProfile`)
+          }
           }}
       >
         <FlexBetween gap="1rem">
