@@ -74,7 +74,7 @@ const FriendListWidget = ({type,id}) => {
     getFollowings();
     }else {
       getFollowingsForUser();
-      getFollowers()
+      getFollowersForUser()
     }
     
     

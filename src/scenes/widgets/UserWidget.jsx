@@ -14,19 +14,18 @@ import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 
 const UserWidget = ({ picturePath,type }) => {
   const [user, setUser] = useState(null);
   const { palette } = useTheme();
   const navigate = useNavigate();
   const token = useSelector((state) => state.token);
-  const userId = useSelector((state) => state.id);
+  
 
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
-console.log(userId);
   const getUser = async () => {
     const response = await fetch(`http://localhost:8000/myProfile`, {
       method: "GET",
@@ -35,13 +34,27 @@ console.log(userId);
     const data = await response.json();
     setUser(data);
   };
+  const ConnecteduserId = useSelector((state) => state.id);
+  const { userId } = useParams();
   const getProfile = async () => {
+    if (type==="home") {
+      const response = await fetch(`http://localhost:8000/user/profile/${ConnecteduserId}`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+      setUser(data);
+    }else  {
     const response = await fetch(`http://localhost:8000/user/profile/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
     setUser(data);
+  
+  }
+
+    
   };
 
   useEffect(() => {
@@ -55,16 +68,7 @@ console.log(userId);
     return null;
   }
 
-  const {
-    fullname,
-    lastName,
-    location,
-    email,
-    nb_followers,
-    nb_followings,
-    bio,
-    username
-  } = user;
+  
 
   return (
     <WidgetWrapper>
@@ -74,8 +78,8 @@ console.log(userId);
         pb="1.1rem"
         onClick={() => {
           if (type==="home") {
-            navigate(`/profile/${userId}`)
-          }
+            navigate(`/profile/${ConnecteduserId}`)
+          }else navigate(`/profile/${userId}`)
           }}
       >
         <FlexBetween gap="1rem">
