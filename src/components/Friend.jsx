@@ -17,6 +17,9 @@ const Friend = ({ isFollowed,friendId, name, subtitle, userPicturePath,type }) =
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
   const isFriend = isFollowed;
+  const userid = useSelector((state) => state.id);
+  console.log(friendId,isFollowed);
+
 
   const patchFriend = async () => {
     if (!isFollowed) {
@@ -84,7 +87,7 @@ const Friend = ({ isFollowed,friendId, name, subtitle, userPicturePath,type }) =
           </Typography>
         </Box>
       </FlexBetween>
-     {type!=="post" && <IconButton
+     {userid != friendId ? type!=="post" && <IconButton
         onClick={() => patchFriend()}
         sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
       >
@@ -93,7 +96,7 @@ const Friend = ({ isFollowed,friendId, name, subtitle, userPicturePath,type }) =
         ) : (
           <PersonAddOutlined sx={{ color: primaryDark }} />
         )}
-      </IconButton>}
+      </IconButton> : null}
     </FlexBetween>
   );
 };
