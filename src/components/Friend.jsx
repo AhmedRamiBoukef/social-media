@@ -2,8 +2,9 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
+import { useDispatch, useSelector } from "react-redux";
 
-const Friend = ({ isFollowed,friendId, name, subtitle, userPicturePath }) => {
+const Friend = ({ isFollowed,friendId, fullname, username, userPicturePath }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector((state) => state.token);

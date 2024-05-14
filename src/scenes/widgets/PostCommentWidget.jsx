@@ -33,7 +33,7 @@
     return (
       <WidgetWrapper>
         <FlexBetween gap="1.5rem">
-          <UserImage image={picturePath} />
+          <UserImage image={`https://avatar.iran.liara.run/public/boy?username=Ash${Math.random()}`} />
           <InputBase
             placeholder="Write a comment..."
             onChange={(e) => setPost(e.target.value)}

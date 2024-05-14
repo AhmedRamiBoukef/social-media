@@ -21,14 +21,13 @@ console.log(useSelector((state) => state));
         gap="0.5rem"
         justifyContent="space-between"
       >
+        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
           <UserWidget userId={userid} type="home" picturePath={"https://avatar.iran.liara.run/public/boy?username=Ash"} />
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-          {/*<MyPostWidget picturePath={picturePath} />*/}
-          {/*<PostsWidget userId={_id} />*/}
           <MyPostWidget picturePath={"picturePath"} />
           <PostsWidget userId={1} />
         </Box>
@@ -36,7 +35,7 @@ console.log(useSelector((state) => state));
           <Box flexBasis="26%">
             <AdvertWidget />
             <Box m="2rem 0" />
-            <FriendListWidget userId={1} />
+            <FriendListWidget userId={userid} />
           </Box>
         )}
       </Box>

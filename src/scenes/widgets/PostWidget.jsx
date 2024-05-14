@@ -111,7 +111,7 @@ const PostWidget = ({
         friendId={postUserId}
         fullname={name}
         username={username}
-        userPicturePath={userPicturePath}
+        userPicturePath={`https://avatar.iran.liara.run/public/boy?username=Ash${Math.random()}`}
       />
       <Typography color={main} sx={{ mt: "1rem" }}>
         {description}
@@ -122,7 +122,7 @@ const PostWidget = ({
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`https://i.pinimg.com/236x/c5/01/76/c50176a9f9e0f584575c1abf73be4fec.jpg`}
+          src={`https://source.unsplash.com/random/?sig=${postId}`}
         />
       )}
       <FlexBetween mt="0.25rem">
@@ -160,7 +160,7 @@ const PostWidget = ({
           {comments.map((comment, i) => (
             <Box key={`${comment.user.username}-${i}`}>
               <FlexBetween gap="1rem" my="0.5rem">
-                <UserImage image={picturePath} />
+                <UserImage image={`https://avatar.iran.liara.run/public/boy?username=Ash${Math.random()}`} />
                 <Box>
                   <Typography
                     variant="h4"

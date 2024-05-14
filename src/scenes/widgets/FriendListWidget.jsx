@@ -101,8 +101,8 @@ const FriendListWidget = ({type,id}) => {
                 isFollowed={false}
                 key={friend.user_id}
                 friendId={friend.user_id}
-                name={friend.full_name}
-                subtitle={friend.username}
+                fullname={friend.full_name}
+                username={friend.username}
                 userPicturePath={`https://avatar.iran.liara.run/public/boy?username=Ash${Math.random()}`}
               />
             ))
@@ -111,8 +111,8 @@ const FriendListWidget = ({type,id}) => {
                 isFollowed={true} 
                 key={following.user_id}
                 friendId={following.user_id}
-                name={following.full_name}
-                subtitle={following.username}
+                fullname={following.full_name}
+                username={following.username}
                 userPicturePath={`https://avatar.iran.liara.run/public/boy?username=Ash${Math.random()}`}
               />
               
@@ -133,8 +133,8 @@ const FriendListWidget = ({type,id}) => {
                 isFollowed={false}
                 key={friend.user_id}
                 friendId={friend.user_id}
-                name={friend.full_name}
-                subtitle={friend.username}
+                fullname={friend.full_name}
+                username={friend.username}
                 userPicturePath={`https://avatar.iran.liara.run/public/boy?username=Ash${Math.random()}`}
               />
             ))
