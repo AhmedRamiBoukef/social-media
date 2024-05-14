@@ -85,6 +85,7 @@ const Form = () => {
       dispatch(
         setLogin({
           token: loggedIn.token,
+          friends:[]
         })
       );
       navigate("/home");

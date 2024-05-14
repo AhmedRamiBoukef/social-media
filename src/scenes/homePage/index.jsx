@@ -22,20 +22,20 @@ const HomePage = () => {
         justifyContent="space-between"
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={_id} picturePath={picturePath} />
+          <UserWidget type="home" picturePath={"https://avatar.iran.liara.run/public/boy?username=Ash"} />
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-          <MyPostWidget picturePath={picturePath} />
-          <PostsWidget userId={_id} />
+          {/*<MyPostWidget picturePath={picturePath} />*/}
+          {/*<PostsWidget userId={_id} />*/}
         </Box>
         {isNonMobileScreens && (
           <Box flexBasis="26%">
             <AdvertWidget />
             <Box m="2rem 0" />
-            <FriendListWidget userId={_id} />
+            <FriendListWidget type="home" />
           </Box>
         )}
       </Box>
