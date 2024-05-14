@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
 
-const PostsWidget = ({ userId, isProfile = false, isSave = false  }) => {
+const PostsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
@@ -19,7 +19,7 @@ const PostsWidget = ({ userId, isProfile = false, isSave = false  }) => {
 
   const getUserPosts = async () => {
     const response = await fetch(
-      `http://localhost:8000/posts/getrecent?page=1`,
+      `http://localhost:8000/postsbyuser?page=1&user_id=${userId}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -37,7 +37,6 @@ const PostsWidget = ({ userId, isProfile = false, isSave = false  }) => {
     } else {
       getPosts();
     }
-    console.log("posts:",posts);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
