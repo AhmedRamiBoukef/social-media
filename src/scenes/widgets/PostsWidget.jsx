@@ -29,6 +29,7 @@ const PostsWidget = ({ userId, isProfile = false, isSave = false  }) => {
 
     dispatch(setPosts({ posts: data }));
   };
+  
 
   useEffect(() => {
     if (isProfile) {
