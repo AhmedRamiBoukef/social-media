@@ -19,7 +19,7 @@ const handleBtnChange= ()=>{
   setPostsType(!postsType)
 }
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3001/users/${userId}`, {
+    const response = await fetch(`http://localhost:8000/user/profile/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -29,7 +29,7 @@ const handleBtnChange= ()=>{
 
   useEffect(() => {
     getUser();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); 
 
   if (!user) return null;
 
@@ -44,16 +44,16 @@ const handleBtnChange= ()=>{
         justifyContent="center"
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={userId} picturePath={user.picturePath} />
+          <UserWidget type={"profile"} userId={userId} picturePath={"https://avatar.iran.liara.run/public/boy?username=Ash"} />
           <Box m="2rem 0" />
-          <FriendListWidget userId={userId} />
+          {<FriendListWidget id={userId} type={"profile"} />}
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         > 
           
-          <MyPostWidget picturePath={user.picturePath} />
+          {/*<MyPostWidget picturePath={user.picturePath} />*/}
           <Box
   flexBasis={isNonMobileScreens ? "42%" : undefined}
   mt={isNonMobileScreens ? undefined : "2rem"}
@@ -73,10 +73,10 @@ const handleBtnChange= ()=>{
 </Box>
 
           <Box m="2rem 0" />
-          {
+          {/*
             postsType ? (<PostsWidget userId={userId} isProfile />)
             : (<SavedPostsWidget/>)
-          }
+  */}
           
         </Box>
       </Box>

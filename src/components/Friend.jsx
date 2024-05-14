@@ -3,12 +3,53 @@ import { useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 
-const Friend = ({ friendId, fullname, username, userPicturePath }) => {
+const Friend = ({ isFollowed,friendId, name, subtitle, userPicturePath }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const token = useSelector((state) => state.token);
+ // const friends = useSelector((state) => state.user.friends);
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
+  const isFriend = isFollowed;
+
+  const patchFriend = async () => {
+    if (!isFollowed) {
+      const response = await fetch(
+        `http://localhost:8000/user/follow`,
+        {
+          method: "POST",
+          body:JSON.stringify({
+            "followingId": friendId
+            
+            
+          }),
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }else {
+      const response = await fetch(
+        `http://localhost:8000/user/unfollow`,
+        {
+          method: "POST",
+          body:JSON.stringify({
+            "followingId": friendId
+            
+            
+          }),
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
+    
+    
+  };
 
   return (
     <FlexBetween>

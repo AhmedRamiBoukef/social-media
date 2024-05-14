@@ -16,17 +16,27 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const UserWidget = ({ userId, picturePath }) => {
+const UserWidget = ({ picturePath,type }) => {
   const [user, setUser] = useState(null);
   const { palette } = useTheme();
   const navigate = useNavigate();
   const token = useSelector((state) => state.token);
+  const userId = useSelector((state) => state.id);
+
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
-
+console.log(userId);
   const getUser = async () => {
-    const response = await fetch(`http://localhost:8000/users/${userId}`, {
+    const response = await fetch(`http://localhost:8000/myProfile`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
+    setUser(data);
+  };
+  const getProfile = async () => {
+    const response = await fetch(`http://localhost:8000/user/profile/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -35,7 +45,10 @@ const UserWidget = ({ userId, picturePath }) => {
   };
 
   useEffect(() => {
-    getUser();
+    if (type==="home") {
+      getUser();
+    }else getProfile()
+    
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) {
@@ -43,13 +56,13 @@ const UserWidget = ({ userId, picturePath }) => {
   }
 
   const {
-    firstName,
+    fullname,
     lastName,
     location,
-    occupation,
-    viewedProfile,
-    impressions,
-    friends,
+    email,
+    nb_followers,
+    nb_followings,
+    bio,
     username
   } = user;
 
@@ -59,7 +72,11 @@ const UserWidget = ({ userId, picturePath }) => {
       <FlexBetween
         gap="0.5rem"
         pb="1.1rem"
-        onClick={() => navigate(`/profile/${userId}`)}
+        onClick={() => {
+          if (type==="home") {
+            navigate(`/profile/${userId}`)
+          }
+          }}
       >
         <FlexBetween gap="1rem">
           <UserImage image={picturePath} />
@@ -75,9 +92,9 @@ const UserWidget = ({ userId, picturePath }) => {
                 },
               }}
             >
-              {firstName} {lastName}
+              {user.full_name}
             </Typography>
-            <Typography color={medium}>{"ka_djouima@esi.dz"}</Typography>
+            <Typography color={medium}>{user.username}</Typography>
           </Box>
         </FlexBetween>
         <ManageAccountsOutlined />
@@ -89,7 +106,7 @@ const UserWidget = ({ userId, picturePath }) => {
       <Box p="1rem 0">
         <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
           <Person fontSize="large" sx={{ color: main }} />
-          <Typography color={medium}>bio {location}</Typography>
+          <Typography color={medium}>bio {user.bio}</Typography>
         </Box>
        
       </Box>
@@ -101,19 +118,19 @@ const UserWidget = ({ userId, picturePath }) => {
         <FlexBetween mb="0.5rem">
           <Typography color={medium}>Following</Typography>
           <Typography color={main} fontWeight="500">
-            {viewedProfile}
+            {user.nb_followings}
           </Typography>
         </FlexBetween>
         <FlexBetween mb="0.5rem">
           <Typography color={medium}>Followers</Typography>
           <Typography color={main} fontWeight="500">
-            {impressions}
+            {user.nb_followers}
           </Typography>
         </FlexBetween>
         <FlexBetween mb="0.5rem">
           <Typography color={medium}>Number of posts</Typography>
           <Typography color={main} fontWeight="500">
-            {viewedProfile}
+            {user.nb_posts}
           </Typography>
         </FlexBetween>
       </Box>

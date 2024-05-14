@@ -9,8 +9,8 @@ import FriendListWidget from "scenes/widgets/FriendListWidget";
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  // const { _id, picturePath } = useSelector((state) => state.user);
-
+  const userid = useSelector((state) => state.id);
+console.log(useSelector((state) => state));
   return (
     <Box>
       <Navbar />
@@ -21,13 +21,14 @@ const HomePage = () => {
         gap="0.5rem"
         justifyContent="space-between"
       >
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={1} picturePath={"path"} />
+          <UserWidget userId={userid} type="home" picturePath={"https://avatar.iran.liara.run/public/boy?username=Ash"} />
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
+          {/*<MyPostWidget picturePath={picturePath} />*/}
+          {/*<PostsWidget userId={_id} />*/}
           <MyPostWidget picturePath={"picturePath"} />
           <PostsWidget userId={1} />
         </Box>

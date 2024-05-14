@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   IconButton,
@@ -25,6 +25,7 @@ import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 
+
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
@@ -37,9 +38,25 @@ const Navbar = () => {
   const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
-
-  const fullName = "user.fullName";
-
+  const token = useSelector((state) => state.token);
+  const [user, setUser] = useState(null);
+  const [fullName, setFullname] = useState("fullname");
+  const getUser = async () => {
+    const response = await fetch(`http://localhost:8000/myProfile`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
+    setUser(data);
+    console.log(user);
+    setFullname(data.full_name)
+  };
+  
+  useEffect(()=>{
+    getUser();
+   
+  },[])
+  
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
