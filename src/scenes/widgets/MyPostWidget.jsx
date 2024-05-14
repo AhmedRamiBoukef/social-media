@@ -42,7 +42,8 @@ const MyPostWidget = ({ picturePath }) => {
       body: JSON.stringify({ content: post }),
     });
     const posts = await response.json();
-    setImage(null);
+console.log(posts);    
+setImage(null);
     setPost("");
   };
 

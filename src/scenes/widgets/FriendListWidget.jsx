@@ -83,6 +83,7 @@ const FriendListWidget = ({type,id}) => {
   const filteredFriends = friends.filter(
     (friend) => !followings.some((following) => following.user_id === friend.user_id)
   );
+  console.log(followings,followers);
 
   return (
     <WidgetWrapper>
@@ -101,8 +102,8 @@ const FriendListWidget = ({type,id}) => {
                 isFollowed={false}
                 key={friend.user_id}
                 friendId={friend.user_id}
-                fullname={friend.full_name}
-                username={friend.username}
+                name={friend.full_name}
+                subtitle={friend.username}
                 userPicturePath={`https://avatar.iran.liara.run/public/boy?username=Ash${Math.random()}`}
               />
             ))
@@ -111,8 +112,8 @@ const FriendListWidget = ({type,id}) => {
                 isFollowed={true} 
                 key={following.user_id}
                 friendId={following.user_id}
-                fullname={following.full_name}
-                username={following.username}
+                name={following.full_name}
+                subtitle={following.username}
                 userPicturePath={`https://avatar.iran.liara.run/public/boy?username=Ash${Math.random()}`}
               />
               
@@ -133,8 +134,8 @@ const FriendListWidget = ({type,id}) => {
                 isFollowed={false}
                 key={friend.user_id}
                 friendId={friend.user_id}
-                fullname={friend.full_name}
-                username={friend.username}
+                name={friend.full_name}
+                subtitle={friend.username}
                 userPicturePath={`https://avatar.iran.liara.run/public/boy?username=Ash${Math.random()}`}
               />
             ))
