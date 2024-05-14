@@ -54,7 +54,7 @@ const handleBtnChange= ()=>{
           mt={isNonMobileScreens ? undefined : "2rem"}
         > 
           
-          <MyPostWidget picturePath={`https://avatar.iran.liara.run/public/boy?username=Ash${Math.random()}`} />
+         {/* <MyPostWidget picturePath={`https://avatar.iran.liara.run/public/boy?username=Ash${Math.random()}`} />*/}
           
           {userid === userId && (<Box
               flexBasis={isNonMobileScreens ? "42%" : undefined}
@@ -76,7 +76,7 @@ const handleBtnChange= ()=>{
 
           <Box m="2rem 0" />
           {
-            postsType ? (<PostsWidget userId={userId} isProfile />)
+            postsType ? (<PostsWidget userId={userId} isProfile={true} />)
             : (<SavedPostsWidget/>)
           }
           

@@ -22,14 +22,14 @@ console.log(useSelector((state) => state));
         justifyContent="space-between"
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={userid} type="home" picturePath={"https://avatar.iran.liara.run/public/boy?username=Ash"} />
+          <UserWidget type="home" picturePath={"https://avatar.iran.liara.run/public/boy?username=Ash"} />
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
           <MyPostWidget picturePath={"picturePath"} />
-          <PostsWidget userId={1} />
+          <PostsWidget  userId={1} isProfile={false} />
         </Box>
         {isNonMobileScreens && (
           <Box flexBasis="26%">

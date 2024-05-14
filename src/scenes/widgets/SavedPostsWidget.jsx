@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
 
 const SavedPostsWidget = () => {
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts);
+  //const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
+  const [posts,setPosts]=useState([])
 
   const getSavedPosts = async () => {
     const response = await fetch(
@@ -18,7 +19,8 @@ const SavedPostsWidget = () => {
     );
     const data = await response.json();
 
-    dispatch(setPosts({ posts: data }));
+   /// dispatch(setPosts({ posts: data }));
+   setPosts(data)
   };
 
   useEffect(() => {

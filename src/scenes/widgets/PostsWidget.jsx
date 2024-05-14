@@ -1,20 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
 
-const PostsWidget = ({ userId, isProfile = false }) => {
+const PostsWidget = ({ userId, isProfile }) => {
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts);
+  //const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
-
+  const [posts,setPosts]=useState([])
+  
   const getPosts = async () => {
     const response = await fetch("http://localhost:8000/getrecent/?page=1", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
-    dispatch(setPosts({ posts: data }));
+    console.log(data);
+   // dispatch(setPosts({ posts: data }));
+   setPosts(data)
   };
 
   const getUserPosts = async () => {
@@ -27,10 +30,11 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     );
     const data = await response.json();
 
-    dispatch(setPosts({ posts: data }));
+    //dispatch(setPosts({ posts: data }));
+    setPosts(data)
   };
   
-
+  console.log(posts);
   useEffect(() => {
     if (isProfile) {
       getUserPosts();
