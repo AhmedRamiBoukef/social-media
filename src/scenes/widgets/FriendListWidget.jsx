@@ -10,7 +10,7 @@ const FriendListWidget = ({type,id}) => {
   const [friends, setFriends] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [followers, setFollowers] = useState([]);
-
+const loggedInUserId=useSelector((state) => state.id);
   const getFollowings = async () => {
     const response = await fetch(
       `http://localhost:8000/user/followings`,
@@ -79,10 +79,12 @@ const FriendListWidget = ({type,id}) => {
     
     
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  console.log(loggedInUserId);
 
   const filteredFriends = friends.filter(
-    (friend) => !followings.some((following) => following.user_id === friend.user_id)
+    (friend) => friend.user_id !== parseInt(loggedInUserId) && !followings.some((following) => following.user_id === friend.user_id)
   );
+  
   console.log(followings,followers);
 
   return (
@@ -131,7 +133,9 @@ const FriendListWidget = ({type,id}) => {
       {type !== "home"
           ? followers.map((friend) => (
               <Friend
-                isFollowed={false}
+              isFollowed={followings.some(
+                (following) => following.user_id === friend.user_id
+              )}
                 key={friend.user_id}
                 friendId={friend.user_id}
                 name={friend.full_name}
